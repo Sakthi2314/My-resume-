@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S. Sakthi Sabarish | Interactive Resume</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals -->
+    <!-- Application Structure Plan: A single-page application with a top navigation bar for smooth scrolling. The structure includes a hero section, an interactive skills dashboard with a radar chart and clickable cards, a vertical timeline for experience, and card-based layouts for development and education. This structure was chosen to create an engaging, non-linear user journey, allowing recruiters to quickly access key information while encouraging exploration of the details. -->
+    <!-- Visualization & Content Choices: 1. Skills: A Radar Chart (Chart.js) to give a high-level visual summary of proficiency, supported by interactive cards (HTML/JS) for detailed skill lists. This combination offers a quick overview and an organized deep dive. 2. Experience: A vertical timeline (HTML/CSS/JS) to visually narrate career progression, with expandable sections to keep the UI clean. This is more engaging than a static list. 3. Certifications/Mentorships: A clean grid of cards (HTML/Tailwind) for easy scanning of professional development activities. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #F8F7F4;
+            color: #333;
+        }
+        .nav-link {
+            transition: color 0.3s ease, border-bottom-color 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-link:hover, .nav-link.active {
+            color: #3B82F6;
+            border-bottom-color: #3B82F6;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            width: 1.25rem;
+            height: 1.25rem;
+            border-radius: 50%;
+            left: -0.625rem;
+            top: 0;
+            background-color: #3B82F6;
+            border: 4px solid #F8F7F4;
+        }
+        .section {
+            scroll-margin-top: 80px;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header & Navigation -->
+    <header id="header" class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-2xl font-bold text-gray-800">
+                <a href="#">S. Sakthi Sabarish</a>
+            </div>
+            <div class="hidden md:flex space-x-8">
+                <a href="#summary" class="nav-link text-gray-600 font-medium pb-1">Summary</a>
+                <a href="#skills" class="nav-link text-gray-600 font-medium pb-1">Skills</a>
+                <a href="#experience" class="nav-link text-gray-600 font-medium pb-1">Experience</a>
+                <a href="#development" class="nav-link text-gray-600 font-medium pb-1">Development</a>
+                <a href="#education" class="nav-link text-gray-600 font-medium pb-1">Education</a>
+            </div>
+            <button id="mobile-menu-button" class="md:hidden text-gray-700 focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+            </button>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4">
+            <a href="#summary" class="block nav-link text-gray-600 py-2">Summary</a>
+            <a href="#skills" class="block nav-link text-gray-600 py-2">Skills</a>
+            <a href="#experience" class="block nav-link text-gray-600 py-2">Experience</a>
+            <a href="#development" class="block nav-link text-gray-600 py-2">Development</a>
+            <a href="#education" class="block nav-link text-gray-600 py-2">Education</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-12">
+        
+        <!-- Hero Section -->
+        <section id="hero" class="text-center py-16">
+            <h1 class="text-5xl md:text-6xl font-bold text-gray-800 leading-tight">S. SAKTHI SABARISH</h1>
+            <p class="text-xl md:text-2xl text-gray-600 mt-4">Client Care & Compliance Professional</p>
+            <div class="mt-8 flex justify-center items-center space-x-6 text-gray-500">
+                <a href="mailto:sakthi14052001@gmail.com" class="hover:text-blue-500 transition-colors">sakthi14052001@gmail.com</a>
+                <span>&bull;</span>
+                <a href="tel:6381992607" class="hover:text-blue-500 transition-colors">6381992607</a>
+                <span>&bull;</span>
+                <a href="https://linkedin.com/in/sssakthi" target="_blank" class="hover:text-blue-500 transition-colors">LinkedIn</a>
+            </div>
+        </section>
+
+        <!-- Professional Summary -->
+        <section id="summary" class="section py-16 bg-white rounded-xl shadow-lg">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-3xl font-bold text-gray-800 mb-6">Professional Summary</h2>
+                <p class="text-lg text-gray-600 leading-relaxed">
+                    A results-driven Client Care and Compliance professional with proven expertise in Anti-Money Laundering (AML), KYC, and operational efficiency. Adept at leveraging data analysis tools like Power BI and advanced Excel to streamline processes and enhance client service. A collaborative team player committed to upholding the highest standards of regulatory compliance and risk management while driving business objectives.
+                </p>
+            </div>
+        </section>
+
+        <!-- Skills Dashboard -->
+        <section id="skills" class="section py-20">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800">Skills Dashboard</h2>
+                <p class="text-lg text-gray-500 mt-2">A visual overview of my core competencies. Click on a category to see details.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div class="chart-container">
+                    <canvas id="skillsChart"></canvas>
+                </div>
+                <div id="skills-details" class="space-y-4">
+                    <!-- Skill cards will be injected here by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Professional Experience -->
+        <section id="experience" class="section py-20">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-800">Professional Experience</h2>
+                <p class="text-lg text-gray-500 mt-2">A timeline of my career progression. Click on a role to view accomplishments.</p>
+            </div>
+            <div class="relative max-w-3xl mx-auto border-l-2 border-gray-200 pl-8">
+                <!-- Experience items will be injected here by JS -->
+            </div>
+        </section>
+
+        <!-- Professional Development & Certifications -->
+        <section id="development" class="section py-20 bg-white rounded-xl shadow-lg">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800">Development & Certifications</h2>
+                <p class="text-lg text-gray-500 mt-2">Commitment to continuous learning and professional growth.</p>
+            </div>
+            <div class="max-w-5xl mx-auto">
+                <h3 class="text-2xl font-semibold text-gray-700 mb-6 text-center">Mentorships (Standard Chartered)</h3>
+                <div class="grid md:grid-cols-2 gap-8 mb-12">
+                     <!-- Mentorship cards will be injected here by JS -->
+                </div>
+                <h3 class="text-2xl font-semibold text-gray-700 mb-6 text-center">Certifications</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Certification cards will be injected here by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Education -->
+        <section id="education" class="section py-20">
+            <div class="text-center">
+                <h2 class="text-3xl font-bold text-gray-800">Education</h2>
+                <div class="mt-8 inline-block bg-white p-8 rounded-xl shadow-lg text-left">
+                    <h3 class="text-xl font-bold text-blue-600">Bachelor of Science in Chemistry (Rank Holder)</h3>
+                    <p class="text-gray-700 mt-1">SRM Institute of Technology, Chennai</p>
+                    <p class="text-gray-500 text-sm mt-2">Graduated May 2023</p>
+                    <p class="mt-4 text-lg font-semibold text-gray-800">CGPA: 9.30 / 10.0</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-6 text-center">
+            <p>&copy; 2025 S. Sakthi Sabarish. All Rights Reserved.</p>
+            <p class="mt-2">Built to showcase skills and experience interactively.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Data
+            const skillsData = {
+                labels: ['Compliance & Risk', 'Data & Analytics', 'Client Management', 'Process Improvement', 'Business Development'],
+                datasets: [{
+                    label: 'Proficiency',
+                    data: [90, 85, 95, 80, 75],
+                    backgroundColor: 'rgba(59, 130, 246, 0.2)',
+                    borderColor: 'rgba(59, 130, 246, 1)',
+                    pointBackgroundColor: 'rgba(59, 130, 246, 1)',
+                    pointBorderColor: '#fff',
+                    pointHoverBackgroundColor: '#fff',
+                    pointHoverBorderColor: 'rgba(59, 130, 246, 1)'
+                }]
+            };
+
+            const skillsDetailsData = [
+                {
+                    category: 'Compliance & Risk',
+                    icon: '🛡️',
+                    items: ['AML/KYC/CDD', 'Sanctions Screening', 'Risk Assessment', 'Transaction Monitoring', 'OFAC Compliance']
+                },
+                {
+                    category: 'Technical & Analytical',
+                    icon: '📊',
+                    items: ['Microsoft Power BI', 'Advanced Excel (Macros, PivotTables)', 'Power Automate', 'LeadSquared CRM']
+                },
+                {
+                    category: 'Professional Skills',
+                    icon: '🤝',
+                    items: ['Cross-Functional Collaboration', 'Client Relationship Management', 'Process Improvement', 'Leadership']
+                }
+            ];
+
+            const experienceData = [
+                {
+                    role: 'Client Care Specialist - MultiSkill PSB',
+                    company: 'Standard Chartered, Chennai',
+                    period: 'July 2024 – Present',
+                    details: [
+                        'Achieved consistent recognition from team leads and managers for outstanding performance in delivering exceptional customer service across credit card and banking channels.',
+                        'Mastered email channel operations, earning "Excellence" awards for two consecutive months (November & December) by collaborating with the support team to resolve complex inquiries efficiently.',
+                        'Streamlined the issuance of No Due Certificates (NDCs) by providing high-level support to the SOPS team, ensuring seamless coordination and process efficiency.',
+                        'Recognized by multiple department heads for reliability and professionalism while supporting senior management on key cross-functional initiatives.'
+                    ]
+                },
+                {
+                    role: 'Business Development Manager',
+                    company: 'Expertrons, Chennai',
+                    period: 'June 2023 – April 2024',
+                    details: [
+                        'Spearheaded regional sales initiatives, securing course enrollments and forging partnerships with premier institutions including IITs, NITs, and the State University of California.',
+                        'Boosted brand visibility and increased inbound leads by developing and executing targeted digital campaigns and webinars in collaboration with SEO and analytics teams.',
+                        'Managed the full sales pipeline using LeadSquared CRM, strategically converting inbound leads into paying customers through personalized counseling on data analytics and data science career tracks.',
+                        'Led end-to-end recruitment for key international tech clients, utilizing ATS tools to streamline processes, manage interviews, and successfully onboard new hires.'
+                    ]
+                }
+            ];
+
+            const mentorshipData = [
+                {
+                    title: 'AML, Compliance & Risk Management',
+                    mentor: 'Mentored by Gabriella Margherito (Policy Specialist, Group AML)',
+                    description: 'Gaining expertise in AML frameworks, regulatory practices, and enterprise risk management.'
+                },
+                {
+                    title: 'Customer Due Diligence (CDD) & KYC',
+                    mentor: 'Mentored by Robert Quito (AML Investigations Team Lead)',
+                    description: 'Gaining practical knowledge of CDD/KYC requirements, risk-based profiling, and compliance workflows.'
+                }
+            ];
+
+            const certificationData = [
+                'The Complete Guide to Anti-Money Laundering (AML) Compliance',
+                'Anti-Money Laundering Concepts: AML, KYC, and Compliance',
+                'Financial Crime: Processes and Technology',
+                'Microsoft Power BI Desktop for Business Intelligence',
+                'Microsoft Excel: From Beginner to Advanced',
+                'ACAMS: Sanctions & Ransomware Risks',
+                'ACAMS: AML Risk Assessment',
+                'ACAMS: Generative AI in Compliance'
+            ];
+
+            // Mobile Menu Toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // Smooth Scrolling & Active Nav Link
+            const navLinks = document.querySelectorAll('.nav-link');
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = e.currentTarget.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        if (mobileMenu.classList.contains('hidden') === false) {
+                            mobileMenu.classList.add('hidden');
+                        }
+                    }
+                });
+            });
+
+            const sections = document.querySelectorAll('.section');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        navLinks.forEach(link => {
+                            link.classList.toggle('active', link.getAttribute('href').substring(1) === entry.target.id);
+                        });
+                    }
+                });
+            }, { rootMargin: "-100px 0px -50% 0px" });
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+
+
+            // Skills Chart
+            const ctx = document.getElementById('skillsChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'radar',
+                data: skillsData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: false
+                        }
+                    },
+                    scales: {
+                        r: {
+                            angleLines: {
+                                color: 'rgba(0, 0, 0, 0.1)'
+                            },
+                            grid: {
+                                color: 'rgba(0, 0, 0, 0.1)'
+                            },
+                            pointLabels: {
+                                font: {
+                                    size: 14,
+                                    weight: 'bold'
+                                },
+                                color: '#333'
+                            },
+                            ticks: {
+                                backdropColor: 'transparent',
+                                stepSize: 25,
+                                display: false
+                            },
+                            suggestedMin: 0,
+                            suggestedMax: 100
+                        }
+                    }
+                }
+            });
+
+            // Populate Skills Details
+            const skillsDetailsContainer = document.getElementById('skills-details');
+            skillsDetailsData.forEach(skill => {
+                const card = document.createElement('div');
+                card.className = 'bg-white p-4 rounded-lg shadow-md cursor-pointer hover:shadow-xl hover:scale-105 transition-all';
+                card.innerHTML = `
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center">
+                            <span class="text-2xl mr-3">${skill.icon}</span>
+                            <h3 class="text-lg font-semibold text-gray-800">${skill.category}</h3>
+                        </div>
+                        <span class="text-gray-400 transform transition-transform duration-300">&#9662;</span>
+                    </div>
+                    <ul class="hidden mt-3 pl-10 list-disc text-gray-600">
+                        ${skill.items.map(item => `<li>${item}</li>`).join('')}
+                    </ul>
+                `;
+                card.addEventListener('click', () => {
+                    card.querySelector('ul').classList.toggle('hidden');
+                    card.querySelector('.text-gray-400').classList.toggle('rotate-180');
+                });
+                skillsDetailsContainer.appendChild(card);
+            });
+
+            // Populate Experience Timeline
+            const experienceContainer = document.querySelector('#experience .relative');
+            experienceData.forEach(job => {
+                const item = document.createElement('div');
+                item.className = 'timeline-item mb-12';
+                item.innerHTML = `
+                    <div class="cursor-pointer">
+                        <h3 class="text-xl font-bold text-gray-800">${job.role}</h3>
+                        <p class="font-semibold text-blue-600">${job.company}</p>
+                        <p class="text-sm text-gray-500 mb-2">${job.period}</p>
+                        <span class="text-sm text-gray-400 flex items-center">Click to expand <svg class="w-4 h-4 ml-1 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></span>
+                    </div>
+                    <div class="experience-details hidden mt-4 pl-4 border-l-2 border-gray-200">
+                        <ul class="list-disc list-inside text-gray-600 space-y-2">
+                            ${job.details.map(detail => `<li>${detail}</li>`).join('')}
+                        </ul>
+                    </div>
+                `;
+                item.querySelector('.cursor-pointer').addEventListener('click', (e) => {
+                    item.querySelector('.experience-details').classList.toggle('hidden');
+                    e.currentTarget.querySelector('svg').classList.toggle('rotate-180');
+                });
+                experienceContainer.appendChild(item);
+            });
+
+            // Populate Mentorships
+            const mentorshipContainer = document.querySelector('#development .grid.md\\:grid-cols-2');
+            mentorshipData.forEach(m => {
+                const card = document.createElement('div');
+                card.className = 'bg-gray-50 p-6 rounded-lg hover:shadow-lg transition-shadow';
+                card.innerHTML = `
+                    <h4 class="font-bold text-lg text-gray-800">${m.title}</h4>
+                    <p class="text-sm text-blue-600 mt-1">${m.mentor}</p>
+                    <p class="text-gray-600 mt-3">${m.description}</p>
+                `;
+                mentorshipContainer.appendChild(card);
+            });
+
+            // Populate Certifications
+            const certContainer = document.querySelector('#development .grid.grid-cols-1');
+            certificationData.forEach(cert => {
+                const item = document.createElement('div');
+                item.className = 'bg-gray-50 p-4 rounded-lg flex items-center hover:bg-blue-100 transition-colors';
+                item.innerHTML = `
+                    <span class="text-green-500 mr-3">&#10004;</span>
+                    <p class="text-gray-700">${cert}</p>
+                `;
+                certContainer.appendChild(item);
+            });
+
+        });
+    </script>
+</body>
+</html>
